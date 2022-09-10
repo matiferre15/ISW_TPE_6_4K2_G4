@@ -1,152 +1,126 @@
-<div class="container">
-    <div class="row">
-    
+<div class="container-fluid sect1">
+  <br>
+  <div class="row">
+
     <div class="dropdown">
-        <button class="btn btn-primary"> Llenar </button>
-            <button
-              class="btn btn-secondary btn-lg btn-circle dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton1"
-              data-bs-toggle="dropdown"
-              aria-expanded="false
-              "
-            >
-            <i class="fa fa-shopping-cart"></i>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item">Action</a></li>
-              <li><a class="dropdown-item">Another action</a></li>
-              <li><a class="dropdown-item">Something else here</a></li>
-            </ul>
-        </div>
 
+      <button class="btn btn-light btn-alternar" (click)="alternarCarrito()" *ngIf="EstadoCarrito == 'Vacio'"> Llenar
+        carrito </button>
+      <button class="btn btn-light btn-alternar" (click)="alternarCarrito()" *ngIf="EstadoCarrito == 'Lleno'"> Vaciar
+        carrito</button>
+      <button class="btn btn-light btn-lg btn-circle dropdown-toggle" type="button" id="dropdownMenuButton1"
+        data-bs-toggle="dropdown" aria-expanded="false
+              " *ngIf="EstadoCarrito == 'Lleno'">
+        <i class="fa fa-shopping-cart"></i>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" *ngIf="EstadoCarrito == 'Lleno'">
+        <li><a class="dropdown-item"><img class="images-cart" src="../../../assets/DobleCuartoDeLibra.png"><b>Mc Combo
+              Doble cuarto de libra</b></a></li>
+        <li><a class="dropdown-item"><img class="images-cart" src="../../../assets/DobleCuartoDeLibra.png"><b>Mc Combo
+              Doble cuarto de libra</b></a></li>
+        <li><a class="dropdown-item"><img class="images-cart" src="../../../assets/DobleCuartoDeLibra.png"><b>Mc Combo
+              Doble cuarto de libra</b></a></li>
+      </ul>
+
+      <button class="btn btn-light btn-lg btn-circle dropdown-toggle" type="button" id="dropdownMenuButton2"
+        data-bs-toggle="dropdown" aria-expanded="false
+              " *ngIf="EstadoCarrito == 'Vacio'">
+        <i class="fa fa-shopping-cart"></i>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" *ngIf="EstadoCarrito == 'Vacio'">
+        <li><a class="dropdown-item disabled"><b>El carrito aún se encuentra vacio</b>
+            <br> <img class="image-empty" src="../../../assets/CarritoVacio.png"></a></li>
+
+      </ul>
     </div>
-    
-  
-    <form [formGroup]="FormPedidoCa">
 
-      <div class="container-fluid py-5 jumbotron rounded">
-        <b class="campos">Direccion</b>
-        <div class="row">
-          <div class="col-5">
-            <em>Calle</em>
-            <input type="text" class="form-control" formControlName="Calle" />
-          </div>
-          <div class="col-2">
-            <em>Numero</em>
-            <input type="text" class="form-control" formControlName="Numero" />
-          </div>
-          <div class="col-5">
-            <em>Ciudad</em>
-            <input type="text" class="form-control" formControlName="Ciudad" />
-          </div>
+  </div>
+
+  <div class="container-fluid py-5 jumbotron rounded">
+    <h4><b>Dirección</b></h4>
+
+    <form [formGroup]="FormPedidoCa">
+      <div class="row">
+        <div class="col-5">
+          <em>Calle</em>
+          <input type="text" class="form-control" formControlName="Calle" />
         </div>
-        <em class="campos"> Referencias </em>
-        <div class="row">
-          <div class="col-12">
-            <textarea class="form-control"> </textarea>
-          </div>
+        <div class="col-2">
+          <em>Numero</em>
+          <input type="text" class="form-control" formControlName="Numero" />
+        </div>
+        <div class="col-5">
+          <em>Ciudad</em>
+          <input type="text" class="form-control" formControlName="Ciudad" />
         </div>
       </div>
-  
-      <div class="container-fluid py-5 jumbotron rounded">
-        <b class="campos">Datos de pago</b>
-        <div class="row justify-content-center">
-          <div class="col-2">
-            <em> Metodo de pago</em>
-            <select class="form-select" formControlName="FormaPago">
-              <option *ngFor="let opt of Opciones" [ngValue]="opt.Nombre">
-                ‌ {{ opt.Nombre }}
-              </option>
-            </select>
-          </div>
-  
-          <div
-            class="col-2"
-            *ngIf="FormPedidoCa.controls['FormaPago'].value == 'Efectivo'"
-          >
-            <em>Monto </em>
-            <input
-              type="text"
-              name="Nombre"
-              class="form-control"
-              formControlName="Monto"
-            />
-          </div>
-          <div
-            class="col-3"
-            *ngIf="
-              FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
-            "
-          >
-            <em>Nombre del titular </em>
-            <input
-              type="text"
-              name="Nombre"
-              class="form-control"
-              formControlName="Monto"
-            />
-          </div>
-          <div
-            class="col-3"
-            *ngIf="
-              FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
-            "
-          >
-            <em>Apellido del titular </em>
-            <input
-              type="text"
-              name="Nombre"
-              class="form-control"
-              formControlName="Monto"
-            />
-          </div>
+      <em class="campos"> Referencias </em>
+      <div class="row">
+        <div class="col-12">
+          <textarea class="form-control"> </textarea>
         </div>
-        <div class="row justify-content-center">
-          <div
-            class="col-3"
-            *ngIf="
+      </div>
+      <br>
+      <h4><b>Datos de pago</b></h4>
+      <div class="row justify-content-center">
+        <div class="col-2">
+          <em> Metodo de pago</em>
+          <select class="form-select" formControlName="FormaPago">
+            <option *ngFor="let opt of Opciones" [ngValue]="opt.Nombre">
+              ‌ {{ opt.Nombre }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-2" *ngIf="FormPedidoCa.controls['FormaPago'].value == 'Efectivo'">
+          <em>Monto </em>
+          <input type="text" name="Nombre" class="form-control" formControlName="Monto" />
+        </div>
+        <div class="col-3" *ngIf="
               FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
-            "
-          >
-            <em>Numero de tarjeta</em>
-            <input
-              type="text"
-              name="Nombre"
-              class="form-control"
-              formControlName="NroTarjeta"
-            />
-          </div>
-          <div
-            class="col-3"
-            *ngIf="
+            ">
+          <em>Nombre del titular </em>
+          <input type="text" name="Nombre" class="form-control" formControlName="Monto" />
+        </div>
+        <div class="col-3" *ngIf="
               FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
-            "
-          >
-            <em>Fecha de vencimiento</em>
-            <input
-              type="text"
-              name="Nombre"
-              class="form-control"
-              formControlName="FechaVencimiento"
-            />
-          </div>
-          <div
-            class="col-2"
-            *ngIf="
+            ">
+          <em>Apellido del titular </em>
+          <input type="text" name="Nombre" class="form-control" formControlName="Monto" />
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-3" *ngIf="
               FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
-            "
-          >
-            <em>CVC</em>
-            <input
-              type="text"
-              name="Nombre"
-              class="form-control"
-              formControlName="Cvc"
-            />
-          </div>
+            ">
+          <em>Numero de tarjeta</em>
+          <input type="text" name="Nombre" class="form-control" formControlName="NroTarjeta" />
+        </div>
+        <div class="col-3" *ngIf="
+              FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
+            ">
+          <em>Fecha de vencimiento</em>
+          <input type="text" name="Nombre" class="form-control" formControlName="FechaVencimiento" />
+        </div>
+        <div class="col-2" *ngIf="
+              FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
+            ">
+          <em>CVC</em>
+          <input type="text" name="Nombre" class="form-control" formControlName="Cvc" />
         </div>
       </div>
     </form>
   </div>
-  
+  <br>
+<div class="container-fluid">
+  <div class="row "> 
+    <div class="col text-center">
+      <button class="btn btn btn-light rounded botones"> Realizar pedido</button>
+      <button class="btn btn btn-light rounded botones"> Cancelar pedido</button>
+
+    </div>
+
+  </div>
+
+</div>
+</div>  

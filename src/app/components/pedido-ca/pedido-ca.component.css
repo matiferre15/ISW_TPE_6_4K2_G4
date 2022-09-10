@@ -1,8 +1,32 @@
+.sect1{
+  background-color: #5f849c;
+}
+
 .jumbotron {
-    background-color: lightgreen;
+    background-color: #dae4eb;
     margin-top: 10px;
   }
+.images-cart{
+  width: 100px;
+  height: 100px;
+}
+
+.image-empty{
+
+  width: 100px;
+  height: 100px;
+  opacity: 0.5;
+}
+
+ul {
+  text-align: center;
+}
+
+.btn-alternar{
+  margin-right: 50px;
+}
   
+
 
 .btn-circle {
     width: 50px;
@@ -12,10 +36,10 @@
     font-size: 20px;
     line-height: 1.1;
 }
-  
-.campos {
-    padding: 0px;
-  }
+
+.botones{
+  margin: 10px
+}
 
 
 .dropdown{
