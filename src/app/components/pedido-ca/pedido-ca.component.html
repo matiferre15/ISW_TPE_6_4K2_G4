@@ -173,6 +173,12 @@
         <em>Minutos</em>
         <input type="text" name="Nombre" class="form-control " formControlName="FechaVencimiento" />
       </div>
+      <div class="col-1 " *ngIf="
+              FormPedidoCa.controls['OpcionRecepcion'].value == 'Elegir fecha y hora'
+            ">
+        <em>Minutos</em>
+        <input type="text" name="Nombre" class="form-control " formControlName="FechaVencimiento" />
+      </div>
     </div>
 
     <!--
