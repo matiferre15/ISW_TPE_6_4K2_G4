@@ -10,7 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./pedido-ca.component.css'],
 })
 export class PedidoCaComponent implements OnInit {
-  
+
   FormPedidoCa = new FormGroup({
     Calle: new FormControl(null, [Validators.required, Validators.maxLength(35)]),
     Numero: new FormControl(null, [Validators.pattern('[0-9]{1,5}'), Validators.required]),
