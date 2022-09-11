@@ -110,7 +110,7 @@
     <form [formGroup]="FormPedidoCaEfectivo">
     <div class="row justify-content-center">
       <div class="col-2" *ngIf="FormPedidoCa.controls['FormaPago'].value == 'Efectivo'">
-        <em>MontoTres </em>
+        <em>Monto</em>
         <input type="text" name="Nombre" class="form-control" formControlName="Monto" />
       </div>
     </div>
@@ -172,13 +172,7 @@
             ">
         <em>Minutos</em>
         <input type="text" name="Nombre" class="form-control " formControlName="FechaVencimiento" />
-      </div>
-      <div class="col-1 " *ngIf="
-              FormPedidoCa.controls['OpcionRecepcion'].value == 'Elegir fecha y hora'
-            ">
-        <em>Minutos</em>
-        <input type="text" name="Nombre" class="form-control " formControlName="FechaVencimiento" />
-      </div>
+      </div> 
     </div>
 
     <!--
