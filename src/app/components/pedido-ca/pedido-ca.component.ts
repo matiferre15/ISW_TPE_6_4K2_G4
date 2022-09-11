@@ -42,13 +42,6 @@ export class PedidoCaComponent implements OnInit {
     Cvc: new FormControl(null,[Validators.required,Validators.pattern('[0-9]{3,4}')]),
   })
 
-  FormPedidoCaRecepcion = new FormGroup({
-    OpcionRecepcion: new FormControl('Lo antes posible'),
-    Fecha: new FormControl(null),
-    Hora: new FormControl(null),
-    Minutos: new FormControl(null),
-  })
-
   EstadoCarrito = "Lleno";
 
   Opciones = [{ Nombre: "Efectivo" }, { Nombre: "Tarjeta de credito" }];
