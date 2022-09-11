@@ -15,7 +15,7 @@
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" *ngIf="EstadoCarrito == 'Lleno'">
         <li *ngFor="let item of Pedido"> <a class="dropdown-item"> <img class="images-cart"
-              src={{item.Imagen}}><b>{{item.Nombre}}</b></a> </li>
+              src={{item.Imagen}}><b>{{item.Nombre}}:  ${{item.Precio}}</b></a> </li>
       </ul>
 
       <button class="btn btn-light btn-lg btn-circle dropdown-toggle" type="button" id="dropdownMenuButton2"
@@ -37,8 +37,8 @@
 
     <form [formGroup]="FormPedidoCa">
       <!-- CAMPOS DE DIRECCION --> 
-      <div class="row">
-        <div class="col-5">
+      <div class="row justify-content-center">
+        <div class="col-4">
           <em>Calle<span class="text-danger">*</span><small> (Max. 35 caracteres)</small></em>
           <input type="text" class="form-control" formControlName="Calle" [ngClass]="{
             'is-invalid ':
@@ -54,7 +54,7 @@
               FormPedidoCa.controls['Numero'].touched
           }"/>
         </div>
-        <div class="col-5">
+        <div class="col-4">
           <em>Ciudad <span class="text-danger">*</span></em>
           <select class="form-select" formControlName="Ciudad">
             <option *ngFor="let ciudad of Ciudades" [ngValue]="ciudad.Nombre">
@@ -67,9 +67,11 @@
 
 
 
-      <em class="campos"> Referencias <small>(Max. 240 caracteres)</small></em>
-      <div class="row">
-        <div class="col-12">
+      
+      <div class="row justify-content-center">
+        
+        <div class="col-10">
+          <em class="campos"> Referencias <small>(Max. 240 caracteres)</small></em>
           <textarea class="form-control" formControlName="Referencia" [ngClass]="{
             'is-invalid':
               FormPedidoCa.controls['Referencia'].errors &&
@@ -78,7 +80,7 @@
         </div>
       </div>
       <br>
-      <h4><b>Datos de pago</b></h4>
+      <h4><b>Datos de pago y recepción</b></h4>
       <div class="row justify-content-center">
         <div class="col-2">
           <em> Metodo de pago <span class="text-danger">*</span></em>
@@ -88,30 +90,46 @@
             </option>
           </select>
         </div>
+        <div class="col-2">
+          <em>Monto a pagar</em>
+          <label for="lmonto" name="Nombre" class="form-control text-disabled" formControlName="MontoAPagar"readonly>
+            ${{calcularMonto()}}
+          </label>
+        </div>
+        <div class="col-2" >
+          <em>Opcion</em>
+          <select class="form-select" formControlName="OpcionRecepcion">
+            <option *ngFor="let opt of OpcionesRecepcion" [ngValue]="opt.Nombre">
+              ‌ {{ opt.Nombre }}
+            </option>
+          </select>
+        </div>
       </div>
     </form>
 
+    <form [formGroup]="FormPedidoCaEfectivo">
     <div class="row justify-content-center">
       <div class="col-2" *ngIf="FormPedidoCa.controls['FormaPago'].value == 'Efectivo'">
         <em>Monto </em>
         <input type="text" name="Nombre" class="form-control" formControlName="Monto" />
       </div>
     </div>
+  </form>
 
     <div class="row justify-content-center">
-      <div class="col-3" *ngIf="
+      <div class="col-2" *ngIf="
               FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
             ">
         <em>Nombre del titular </em>
         <input type="text" name="Nombre" class="form-control" formControlName="Monto" />
       </div>
-      <div class="col-3" *ngIf="
+      <div class="col-2" *ngIf="
               FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
             ">
         <em>Apellido del titular </em>
         <input type="text" name="Nombre" class="form-control" formControlName="Monto" />
       </div>
-      <div class="col-3" *ngIf="
+      <div class="col-2" *ngIf="
               FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
             ">
         <em>Numero de tarjeta</em>
@@ -121,13 +139,13 @@
 
     <div class="row justify-content-center">
       
-      <div class="col-3" *ngIf="
+      <div class="col-2 " *ngIf="
               FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
             ">
         <em>Fecha de vencimiento</em>
         <input type="text" name="Nombre" class="form-control" formControlName="FechaVencimiento" />
       </div>
-      <div class="col-2" *ngIf="
+      <div class="col-1" *ngIf="
               FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
             ">
         <em>CVC</em>
@@ -135,6 +153,29 @@
       </div>
     </div>
     <br>
+    <div class="row justify-content-center">
+      <div class="col-2 " *ngIf="
+              FormPedidoCa.controls['OpcionRecepcion'].value == 'Elegir fecha y hora'
+            ">
+        <em>Fecha de recepción</em>
+        <input type="text" name="Nombre" class="form-control" formControlName="FechaVencimiento" />
+      </div>
+      <div class="col-1 " *ngIf="
+              FormPedidoCa.controls['OpcionRecepcion'].value == 'Elegir fecha y hora'
+            ">
+        <em>Hora</em>
+        <input type="text" name="Nombre" class="form-control " formControlName="FechaVencimiento" />
+        
+      </div>
+      <div class="col-1 " *ngIf="
+              FormPedidoCa.controls['OpcionRecepcion'].value == 'Elegir fecha y hora'
+            ">
+        <em>Minutos</em>
+        <input type="text" name="Nombre" class="form-control " formControlName="FechaVencimiento" />
+      </div>
+    </div>
+
+    <!--
     <h4><b>Opciones de recepción</b></h4>
     <div class="row justify-content-center">
       <form [formGroup]="FormPedidoCaRecepcion">
@@ -154,6 +195,7 @@
       </div>
       </form>
     </div>
+    -->
   </div>
 
 

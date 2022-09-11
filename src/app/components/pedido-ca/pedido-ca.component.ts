@@ -16,7 +16,8 @@ export class PedidoCaComponent implements OnInit {
     Numero: new FormControl(null, [Validators.pattern('[0-9]{1,5}'), Validators.required]),
     Ciudad: new FormControl('Córdoba'),
     Referencia: new FormControl(null,[Validators.maxLength(240)]),
-    FormaPago: new FormControl('Tarjeta de credito'),})
+    FormaPago: new FormControl('Tarjeta de credito'),
+    OpcionRecepcion: new FormControl('Elegir fecha y hora'),})
   //  Monto: new FormControl(null, [Validators.required,Validators.pattern('[0-9]{1,7}')]),
   //  NroTarjeta: new FormControl(null, [Validators.required, Validators.pattern('[0-9]{16}')]),
   //  NombreTitular: new FormControl(null,[Validators.required, Validators.maxLength(50)]),
@@ -45,28 +46,35 @@ export class PedidoCaComponent implements OnInit {
     OpcionRecepcion: new FormControl('Lo antes posible'),
     Fecha: new FormControl(null),
     Hora: new FormControl(null),
+    Minutos: new FormControl(null),
   })
 
   EstadoCarrito = "Lleno";
 
   Opciones = [{ Nombre: "Efectivo" }, { Nombre: "Tarjeta de credito" }];
   OpcionesRecepcion = [{ Nombre: "Lo antes posible"}, { Nombre: "Elegir fecha y hora"}];
+  
   Ciudades = [{ Nombre: "Alta Gracia" }, { Nombre: "Arroyito" }, { Nombre: "Bell Ville" }, { Nombre: "Córdoba" },
   { Nombre: "Cosquín" }, { Nombre: "Jesús María" }, { Nombre: "Marcos Juárez" }, { Nombre: "Río Cuarto" }, { Nombre: "Río Tercero" },
   { Nombre: "San Francisco" }, { Nombre: "Villa Carlos Paz" }, { Nombre: "Villa María" }, { Nombre: "Villa Nueva" }];
 
-  Pedido = [{Nombre:"McCombo doble cuarto de libra", Imagen:"../../../assets/DobleCuartoDeLibra.png"}, 
-  { Nombre: "McCombo cuarto de libra", Imagen:"../../../assets/CuartoDeLibra.png"}, 
-  {Nombre: "Sundae dulce de leche", Imagen:"../../../assets/SundaeDdl.png"}];
-
-
-
-  
-
+  Pedido = [{Nombre:"McCombo doble cuarto de libra", Imagen:"../../../assets/DobleCuartoDeLibra.png", Precio:"1200"}, 
+  { Nombre: "McCombo cuarto de libra", Imagen:"../../../assets/CuartoDeLibra.png", Precio: "900"}, 
+  {Nombre: "Sundae dulce de leche", Imagen:"../../../assets/SundaeDdl.png", Precio:"300"}];
 
   constructor() {}
 
   ngOnInit() {  }
+
+  calcularMonto(){
+    let MontoPagar = 0
+    if (this.EstadoCarrito == "Lleno"){
+      for(let i = 0; i<this.Pedido.length; i++){
+        MontoPagar += parseInt(this.Pedido[i].Precio)
+      }
+    }
+    return MontoPagar
+  }
 
   alternarCarrito(){
     this.EstadoCarrito == "Lleno" ? this.EstadoCarrito = "Vacio" : this.EstadoCarrito = "Lleno";

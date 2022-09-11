@@ -11,11 +11,17 @@
   height: 100px;
 }
 
+
+
 .image-empty{
 
   width: 100px;
   height: 100px;
   opacity: 0.5;
+}
+
+.xs_controls{
+  width: 42px;
 }
 
 ul {
@@ -46,4 +52,8 @@ textarea {   /* for all text* area elements */
 
 .dropdown{
     text-align: right;
+}
+
+.text-disabled{
+  background-color: lightgrey;
 }
