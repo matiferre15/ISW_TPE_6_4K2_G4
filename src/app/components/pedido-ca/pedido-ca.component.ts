@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   host: {
@@ -29,7 +30,7 @@ export class PedidoCaComponent implements OnInit {
   //});
 
   FormPedidoCaEfectivo = new FormGroup({
-    Monto: new FormControl('0', [Validators.required,Validators.pattern('[0-9]{1,5}')]),
+    Monto: new FormControl(null, [Validators.required,Validators.pattern('[0-9]{1,5}')]),
     MontoAPagar: new FormControl()
   })
 
@@ -116,6 +117,14 @@ export class PedidoCaComponent implements OnInit {
   alternarCarrito(){
     this.EstadoCarrito == "Lleno" ? this.EstadoCarrito = "Vacio" : this.EstadoCarrito = "Lleno";
     
+  }
+
+  grabar(){
+    Swal.fire(
+      'Pedido realizado con exito!',
+      '',
+      'success'
+    )
   }
 }
 

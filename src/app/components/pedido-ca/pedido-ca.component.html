@@ -118,9 +118,18 @@
         <em>Monto</em>
         <input type="text" name="Nombre" class="form-control" formControlName="Monto" [ngClass]="{
           'is-invalid':
-            FormPedidoCaEfectivo.controls['Monto'].errors &&
-            FormPedidoCaEfectivo.controls['Monto'].touched
+            (FormPedidoCaEfectivo.controls['Monto'].errors &&
+            FormPedidoCaEfectivo.controls['Monto'].touched) || (FormPedidoCaEfectivo.controls['Monto'].touched && validarMonto())
         }"/>
+        <small class="text-danger" *ngIf="FormPedidoCaEfectivo.controls['Monto'].hasError('required') &&
+        FormPedidoCaEfectivo.controls['Monto'].touched">Dato requerido.</small>
+        <small class="text-danger" *ngIf="FormPedidoCaEfectivo.controls['Monto'].hasError('pattern') &&
+        FormPedidoCaEfectivo.controls['Monto'].touched ">Monto invalido</small>
+        <small class="text-danger" *ngIf="!(FormPedidoCaEfectivo.controls['Monto'].hasError('pattern')) && 
+        !(FormPedidoCaEfectivo.controls['Monto'].hasError('required'))
+        && (FormPedidoCaEfectivo.controls['Monto'].touched && validarMonto())">Monto insuficiente</small>
+        
+
       </div>
     </div>
   </form>
@@ -276,9 +285,8 @@
   <div class="container-fluid">
     <div class="row ">
       <div class="col text-center">
-        <button class="btn btn btn-light rounded botones" [disabled]="obtenerEstadoValidacion()"> Realizar pedido</button>
+        <button class="btn btn btn-light rounded botones" [disabled]="obtenerEstadoValidacion()" (click)="grabar()"> Realizar pedido</button>
         <button class="btn btn btn-light rounded botones"> Cancelar pedido</button>
-
       </div>
 
     </div>
