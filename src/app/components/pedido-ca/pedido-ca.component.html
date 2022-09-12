@@ -3,7 +3,6 @@
   <div class="row">
 
     <div class="dropdown">
-
       <button class="btn btn-light btn-alternar" (click)="alternarCarrito()" *ngIf="EstadoCarrito == 'Vacio'"> Llenar
         carrito </button>
       <button class="btn btn-light btn-alternar" (click)="alternarCarrito()" *ngIf="EstadoCarrito == 'Lleno'"> Vaciar
@@ -34,7 +33,6 @@
 
   <div class="container-fluid py-5 jumbotron rounded">
     <h4><b>Dirección</b></h4>
-
     <form [formGroup]="FormPedidoCa">
       <!-- CAMPOS DE DIRECCION --> 
       <div class="row justify-content-center">
@@ -210,8 +208,37 @@
       </div>
     </div>
   </form>
+  
+  <form [formGroup]="FormPedidoCaRecepcion">
+  <div class="row justify-content-center">
+    <div class="col-2 " *ngIf="
+            FormPedidoCa.controls['OpcionRecepcion'].value == 'Elegir fecha y hora'
+          ">
+      <em>Fecha de recepción<span class="text-danger">*</span></em>
+      <input type="text" name="Nombre" placeholder="DD/MM" class="form-control" formControlName="FechaRecepcion" [ngClass]="{
+        'is-invalid':
+          FormPedidoCaRecepcion.controls['FechaRecepcion'].errors &&
+          FormPedidoCaRecepcion.controls['FechaRecepcion'].touched
+      }"/>
+      <small class="text-danger" *ngIf="FormPedidoCaRecepcion.controls['FechaRecepcion'].hasError('required') &&
+      FormPedidoCaRecepcion.controls['FechaRecepcion'].touched">Dato requerido.</small>
+      <small class="text-danger" *ngIf="FormPedidoCaRecepcion.controls['FechaRecepcion'].hasError('pattern') &&
+      FormPedidoCaRecepcion.controls['FechaRecepcion'].touched">Fecha invalida (DD/MM)</small>
+    </div>
+    <div class="col-1 " *ngIf="FormPedidoCa.controls['OpcionRecepcion'].value == 'Elegir fecha y hora'">
+        <em>Hora<span class="text-danger">*</span></em>
+        <input type="time" name="Hora" class="form-control " formControlName="Hora" [ngClass]="{
+          'is-invalid':
+            FormPedidoCaRecepcion.controls['Hora'].errors &&
+            FormPedidoCaRecepcion.controls['Hora'].touched
+        }"/>
+        <small class="text-danger" *ngIf="FormPedidoCaRecepcion.controls['Hora'].hasError('required') &&
+      FormPedidoCaRecepcion.controls['Hora'].touched">Dato requerido.</small>         
+    </div>
+  </div>
+</form>
 
-    <div class="row justify-content-center">
+    <!-- <div class="row justify-content-center">
       <div class="col-2 " *ngIf="
               FormPedidoCa.controls['OpcionRecepcion'].value == 'Elegir fecha y hora'
             ">
@@ -222,7 +249,7 @@
           <em>Hora<span class="text-danger">*</span></em>
           <input type="time" name="Hora" class="form-control " formControlName="Hora"/>         
       </div>
-    </div>
+    </div> -->
 
     <!--
     <h4><b>Opciones de recepción</b></h4>
