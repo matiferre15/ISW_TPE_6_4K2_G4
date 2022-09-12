@@ -14,11 +14,11 @@ export class PedidoCaComponent implements OnInit {
 
   FormPedidoCa = new FormGroup({
     Calle: new FormControl(null, [Validators.required, Validators.maxLength(35)]),
-    Numero: new FormControl(null, [Validators.pattern('[0-9]{1,5}'), Validators.required]),
-    Ciudad: new FormControl('Córdoba'),
+    Numero: new FormControl(null, [Validators.pattern("[0-9]{1,5}"), Validators.required]),
+    Ciudad: new FormControl("Córdoba"),
     Referencia: new FormControl(null,[Validators.maxLength(240)]),
-    FormaPago: new FormControl('Tarjeta de credito'),
-    OpcionRecepcion: new FormControl('Elegir fecha y hora'),})
+    FormaPago: new FormControl("Efectivo"),
+    OpcionRecepcion: new FormControl("Lo antes posible"),})
   //  Monto: new FormControl(null, [Validators.required,Validators.pattern('[0-9]{1,7}')]),
   //  NroTarjeta: new FormControl(null, [Validators.required, Validators.pattern('[0-9]{16}')]),
   //  NombreTitular: new FormControl(null,[Validators.required, Validators.maxLength(50)]),
@@ -30,22 +30,22 @@ export class PedidoCaComponent implements OnInit {
   //});
 
   FormPedidoCaEfectivo = new FormGroup({
-    Monto: new FormControl(null, [Validators.required,Validators.pattern('[0-9]{1,5}')]),
+    Monto: new FormControl(null, [Validators.required,Validators.pattern("[0-9]{1,5}")]),
     MontoAPagar: new FormControl()
   })
 
   FormPedidoCaTarjeta = new FormGroup({
-    NroTarjeta: new FormControl(null, [Validators.required, Validators.pattern('[0-9]{16}')]),
+    NroTarjeta: new FormControl(null, [Validators.required, Validators.pattern("[0-9]{16}")]),
     NombreTitular: new FormControl(null,[Validators.required, Validators.maxLength(50)]),
     ApellidoTitular: new FormControl(null,[Validators.required, Validators.maxLength(50)]),
     FechaVencimiento: new FormControl(null,[Validators.required, 
-      Validators.pattern('(0[1-9]|1[012])[-/](20[2][2-9]|20[3-5][0-9])')
+      Validators.pattern("(0[1-9]|1[012])[-/](20[2][2-9]|20[3-5][0-9])")
     ]),
-    Cvc: new FormControl(null,[Validators.required,Validators.pattern('[0-9]{3,4}')]),
+    Cvc: new FormControl(null,[Validators.required,Validators.pattern("[0-9]{3,4}")]),
   })
 
   FormPedidoCaRecepcion = new FormGroup({
-    FechaRecepcion: new FormControl(null,[Validators.required, Validators.pattern('((0[1-9]|[12][0-9]|3[01])[\/.](0[13578]|1[02]))|((0[1-9]|[12][0-9]|30)[\/.](0[469]|11))|((0[1-9]|1[0-9]|2[0-8])[\/.](02))|(29[\/.](02))')]),
+    FechaRecepcion: new FormControl(null,[Validators.required, Validators.pattern("((0[1-9]|[12][0-9]|3[01])[\/.](0[13578]|1[02]))|((0[1-9]|[12][0-9]|30)[\/.](0[469]|11))|((0[1-9]|1[0-9]|2[0-8])[\/.](02))|(29[\/.](02))")]),
     Hora: new FormControl(null, [Validators.required]),
   })
 
@@ -60,7 +60,7 @@ export class PedidoCaComponent implements OnInit {
 
   Pedido = [{Nombre:"McCombo doble cuarto de libra", Imagen:"../../../assets/DobleCuartoDeLibra.png", Precio:"1200"}, 
   { Nombre: "McCombo cuarto de libra", Imagen:"../../../assets/CuartoDeLibra.png", Precio: "900"}, 
-  {Nombre: "Sundae dulce de leche", Imagen:"../../../assets/SundaeDdl.png", Precio:"300"}];
+  {Nombre: "Sundae dulce de leche", Imagen:"../../../assets/SundaeDdl.png", Precio:"500"}];
 
   constructor() {}
 
@@ -79,7 +79,7 @@ export class PedidoCaComponent implements OnInit {
   validarMonto(){
     let Monto: string;
     if(this.FormPedidoCaEfectivo.controls.Monto.value == null){
-      Monto = '0';
+      Monto = "0";
     }
     else{
       Monto = this.FormPedidoCaEfectivo.controls.Monto.value;
@@ -111,7 +111,7 @@ export class PedidoCaComponent implements OnInit {
       BoolRecepcion = false;
     }
 
-    return(BoolPago || BoolRecepcion || this.FormPedidoCa.invalid)
+    return(BoolPago || BoolRecepcion || this.FormPedidoCa.invalid || this.EstadoCarrito == "Vacio")
   }
 
   alternarCarrito(){
@@ -120,29 +120,50 @@ export class PedidoCaComponent implements OnInit {
   }
 
   grabar(){
-    Swal.fire(
-      'Pedido realizado con exito!',
-      '',
-      'success'
-    )
+    Swal.fire({
+      title: "¿Está seguro de que desea realizar el pedido?",
+      text: "",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar.",
+      confirmButtonText: "Si, estoy seguro."
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          "Pedido realizado con éxito",
+          "",
+          "success"
+        )
+        this.FormPedidoCa.reset({Ciudad: "Córdoba", FormaPago: "Efectivo", OpcionRecepcion: "Lo antes posible"} );
+        this.FormPedidoCaEfectivo.reset();
+        this.FormPedidoCaTarjeta.reset();
+        this.FormPedidoCaRecepcion.reset();
+      }
+    })
   }
 
   cancelar(){
     Swal.fire({
-      title: '¿Está seguro de que desea cancelar el pedido?',
+      title: "¿Está seguro de que desea cancelar el pedido?",
       text: "",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'No cancelar.',
-      confirmButtonText: 'Si, estoy seguro.'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "No cancelar.",
+      confirmButtonText: "Si, estoy seguro."
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire(
-          'Pedido cancelado',
-          ''
+          "Pedido cancelado",
+          ""
         )
+        this.FormPedidoCa.reset({Ciudad: "Córdoba", FormaPago: "Efectivo", OpcionRecepcion: "Lo antes posible"} );
+        this.FormPedidoCaEfectivo.reset();
+        this.FormPedidoCaTarjeta.reset();
+        this.FormPedidoCaRecepcion.reset();
       }
     })
   }
