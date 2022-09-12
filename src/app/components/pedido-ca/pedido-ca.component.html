@@ -119,14 +119,12 @@
             FormPedidoCaEfectivo.controls['Monto'].touched) || (FormPedidoCaEfectivo.controls['Monto'].touched && validarMonto())
         }" />
           <small class="text-danger" *ngIf="FormPedidoCaEfectivo.controls['Monto'].hasError('required') &&
-        FormPedidoCaEfectivo.controls['Monto'].touched">Dato requerido.</small>
+          FormPedidoCaEfectivo.controls['Monto'].touched">Dato requerido.</small>
           <small class="text-danger" *ngIf="FormPedidoCaEfectivo.controls['Monto'].hasError('pattern') &&
-        FormPedidoCaEfectivo.controls['Monto'].touched ">Monto invalido</small>
+          FormPedidoCaEfectivo.controls['Monto'].touched ">Monto invalido</small>
           <small class="text-danger" *ngIf="!(FormPedidoCaEfectivo.controls['Monto'].hasError('pattern')) && 
-        !(FormPedidoCaEfectivo.controls['Monto'].hasError('required'))
-        && (FormPedidoCaEfectivo.controls['Monto'].touched && validarMonto())">Monto insuficiente</small>
-
-
+          !(FormPedidoCaEfectivo.controls['Monto'].hasError('required'))
+          && (FormPedidoCaEfectivo.controls['Monto'].touched && validarMonto())">Monto insuficiente</small>
         </div>
       </div>
     </form>
@@ -134,19 +132,16 @@
 
     <form [formGroup]="FormPedidoCaTarjeta">
       <div class="row justify-content-center">
-        <div class="col-2" *ngIf="
-              FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
-            ">
+        <div class="col-2" *ngIf="FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'">
           <em>Nombre del titular <span class="text-danger">*</span></em>
           <input type="text" name="Nombre" class="form-control" formControlName="NombreTitular" [ngClass]="{
           'is-invalid':
             FormPedidoCaTarjeta.controls['NombreTitular'].errors &&
-            FormPedidoCaTarjeta.controls['NombreTitular'].touched
-        }" />
+            FormPedidoCaTarjeta.controls['NombreTitular'].touched}" />
           <small class="text-danger" *ngIf="FormPedidoCaTarjeta.controls['NombreTitular'].hasError('required') &&
-        FormPedidoCaTarjeta.controls['NombreTitular'].touched">Dato requerido.</small>
+          FormPedidoCaTarjeta.controls['NombreTitular'].touched">Dato requerido.</small>
           <small class="text-danger" *ngIf="FormPedidoCaTarjeta.controls['NombreTitular'].hasError('maxlength') &&
-        FormPedidoCaTarjeta.controls['NombreTitular'].touched">Máximo 50 caracteres.</small>
+          FormPedidoCaTarjeta.controls['NombreTitular'].touched">Máximo 50 caracteres.</small>
 
         </div>
         <div class="col-2" *ngIf="
