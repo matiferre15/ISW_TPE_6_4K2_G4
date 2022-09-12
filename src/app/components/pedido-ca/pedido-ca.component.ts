@@ -29,7 +29,8 @@ export class PedidoCaComponent implements OnInit {
   //});
 
   FormPedidoCaEfectivo = new FormGroup({
-    Monto: new FormControl(null, [Validators.required,Validators.pattern('[0-9]{1,5}')]),
+    Monto: new FormControl('0', [Validators.required,Validators.pattern('[0-9]{1,5}')]),
+    MontoAPagar: new FormControl()
   })
 
   FormPedidoCaTarjeta = new FormGroup({
@@ -72,6 +73,44 @@ export class PedidoCaComponent implements OnInit {
       }
     }
     return MontoPagar
+  }
+
+  validarMonto(){
+    let Monto: string;
+    if(this.FormPedidoCaEfectivo.controls.Monto.value == null){
+      Monto = '0';
+    }
+    else{
+      Monto = this.FormPedidoCaEfectivo.controls.Monto.value;
+    }
+    
+    let MontoAPagar = this.calcularMonto();
+
+    console.log(Monto, MontoAPagar)
+    return !(parseInt(Monto) >= MontoAPagar)
+
+  }
+    
+
+  obtenerEstadoValidacion(){
+    let BoolPago: boolean;
+    let BoolRecepcion: boolean;
+
+    if(this.FormPedidoCa.controls.FormaPago.value == "Efectivo"){
+      BoolPago = this.FormPedidoCaEfectivo.invalid || this.validarMonto();
+    }
+    else{
+      BoolPago = this.FormPedidoCaTarjeta.invalid; 
+    }
+
+    if(this.FormPedidoCa.controls.OpcionRecepcion.value == "Elegir fecha y hora"){
+      BoolRecepcion = this.FormPedidoCaRecepcion.invalid;
+    }
+    else{
+      BoolRecepcion = false;
+    }
+
+    return(BoolPago || BoolRecepcion || this.FormPedidoCa.invalid)
   }
 
   alternarCarrito(){

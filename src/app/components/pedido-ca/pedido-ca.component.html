@@ -12,7 +12,7 @@
               " *ngIf="EstadoCarrito == 'Lleno'">
         <i class="fa fa-shopping-cart"></i>
       </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" *ngIf="EstadoCarrito == 'Lleno'">
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" *ngIf="EstadoCarrito == 'Lleno'"> 
         <li *ngFor="let item of Pedido"> <a class="dropdown-item"> <img class="images-cart"
               src={{item.Imagen}}><b>{{item.Nombre}}:  ${{item.Precio}}</b></a> </li>
       </ul>
@@ -31,6 +31,7 @@
 
   </div>
 
+  
   <div class="container-fluid py-5 jumbotron rounded">
     <h4><b>Dirección</b></h4>
     <form [formGroup]="FormPedidoCa">
@@ -70,10 +71,6 @@
         </div>
       </div>
 
-
-
-
-      
       <div class="row justify-content-center">
         
         <div class="col-10">
@@ -279,7 +276,7 @@
   <div class="container-fluid">
     <div class="row ">
       <div class="col text-center">
-        <button class="btn btn btn-light rounded botones"> Realizar pedido</button>
+        <button class="btn btn btn-light rounded botones" [disabled]="obtenerEstadoValidacion()"> Realizar pedido</button>
         <button class="btn btn btn-light rounded botones"> Cancelar pedido</button>
 
       </div>
