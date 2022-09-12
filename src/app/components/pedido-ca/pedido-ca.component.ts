@@ -126,5 +126,25 @@ export class PedidoCaComponent implements OnInit {
       'success'
     )
   }
+
+  cancelar(){
+    Swal.fire({
+      title: '¿Está seguro de que desea cancelar el pedido?',
+      text: "",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'No cancelar.',
+      confirmButtonText: 'Si, estoy seguro.'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Pedido cancelado',
+          ''
+        )
+      }
+    })
+  }
 }
 
