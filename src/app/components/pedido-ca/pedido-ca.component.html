@@ -1,11 +1,15 @@
+<!--Div contenedor de toda la pagina-->
 <div class="container-fluid sect1">
   <br>
+  <!--Div fila para los botones de vaciar llenar y carrito-->
   <div class="row">
     <div class="dropdown">
-      <button class="btn btn-light btn-alternar" (click)="alternarCarrito()" *ngIf="EstadoCarrito == 'Vacio'"> Llenar
-        carrito </button>
-      <button class="btn btn-light btn-alternar" (click)="alternarCarrito()" *ngIf="EstadoCarrito == 'Lleno'"> Vaciar
+      <!--Botones vaciar/llenar-->
+      <button class="btn btn-light btn-alternar" (click)="alternarCarrito()" *ngIf="EstadoCarrito == 'Vacio'">Llenar
         carrito</button>
+      <button class="btn btn-light btn-alternar" (click)="alternarCarrito()" *ngIf="EstadoCarrito == 'Lleno'">Vaciar
+        carrito</button>
+      <!--Botones dropdown carrito-->
       <button class="btn btn-light btn-lg btn-circle dropdown-toggle" type="button" id="dropdownMenuButton1"
         data-bs-toggle="dropdown" aria-expanded="false" 
         *ngIf="EstadoCarrito == 'Lleno'">
@@ -15,51 +19,49 @@
         <li *ngFor="let item of Pedido"> <a class="dropdown-item"> <img class="images-cart"
               src={{item.Imagen}}><b>{{item.Nombre}}: ${{item.Precio}}</b></a> </li>
       </ul>
-
       <button class="btn btn-light btn-lg btn-circle dropdown-toggle" type="button" id="dropdownMenuButton2"
-        data-bs-toggle="dropdown" aria-expanded="false
-              " *ngIf="EstadoCarrito == 'Vacio'">
+        data-bs-toggle="dropdown" aria-expanded="false" *ngIf="EstadoCarrito == 'Vacio'">
         <i class="fa fa-shopping-cart"></i>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" *ngIf="EstadoCarrito == 'Vacio'">
         <li><a class="dropdown-item disabled"><b>El carrito se encuentra vacio</b>
             <br> <img class="image-empty" src="../../../assets/CarritoVacio.png"></a></li>
-
       </ul>
     </div>
-
   </div>
-
-
+  <!--Div contenedor de todo el formulario-->
   <div class="container-fluid py-5 jumbotron rounded">
     <h4><b>Dirección</b></h4>
+    <!--CAMPOS DE DIRECCION-->
     <form [formGroup]="FormPedidoCa">
-      <!-- CAMPOS DE DIRECCION -->
       <div class="row justify-content-center">
         <div class="col-4">
           <em>Calle<span class="text-danger">*</span></em>
+          <!--Campo calle y formato de validacion-->
           <input type="text" class="form-control" formControlName="Calle" [ngClass]="{
             'is-invalid ':
-              FormPedidoCa.controls['Calle'].errors &&
-              FormPedidoCa.controls['Calle'].touched}" />
+            FormPedidoCa.controls['Calle'].errors &&
+            FormPedidoCa.controls['Calle'].touched}" />
           <small class="text-danger" *ngIf="FormPedidoCa.controls['Calle'].hasError('required') &&
-          FormPedidoCa.controls['Calle'].touched">Dato requerido.</small>
+            FormPedidoCa.controls['Calle'].touched">Dato requerido.</small>
           <small class="text-danger" *ngIf="FormPedidoCa.controls['Calle'].hasError('maxlength') &&
-          FormPedidoCa.controls['Calle'].touched">Max. 35 caracteres</small>
+            FormPedidoCa.controls['Calle'].touched">Max. 35 caracteres</small>
         </div>
         <div class="col-2">
           <em>Numero <span class="text-danger">*</span> </em>
+          <!--Campo numero y formato de validacion-->
           <input type="text" class="form-control" formControlName="Numero" [ngClass]="{
             'is-invalid':
-              FormPedidoCa.controls['Numero'].errors &&
-              FormPedidoCa.controls['Numero'].touched}" />
+            FormPedidoCa.controls['Numero'].errors &&
+            FormPedidoCa.controls['Numero'].touched}" />
           <small class="text-danger" *ngIf="FormPedidoCa.controls['Numero'].hasError('required') &&
-          FormPedidoCa.controls['Numero'].touched">Dato requerido.</small>
+            FormPedidoCa.controls['Numero'].touched">Dato requerido.</small>
           <small class="text-danger" *ngIf="FormPedidoCa.controls['Numero'].hasError('pattern') &&
-          FormPedidoCa.controls['Numero'].touched">Max. 5 digitos</small>
+            FormPedidoCa.controls['Numero'].touched">Max. 5 digitos</small>
         </div>
         <div class="col-4">
           <em>Ciudad <span class="text-danger">*</span></em>
+          <!--ComboBox para seleccionar ciudad-->
           <select class="form-select" formControlName="Ciudad">
             <option *ngFor="let ciudad of Ciudades" [ngValue]="ciudad.Nombre">
               ‌ {{ciudad.Nombre}}
@@ -71,21 +73,24 @@
       <div class="row justify-content-center">
 
         <div class="col-10">
-          <em class="campos"> Referencias <small>(Max. 240 caracteres)</small></em>
+          <em class="campos">Referencias<small>(Max. 240 caracteres)</small></em>
+          <!--Campo referencia y formato de validacion-->
           <textarea class="form-control" formControlName="Referencia" [ngClass]="{
             'is-invalid':
-              FormPedidoCa.controls['Referencia'].errors &&
-              FormPedidoCa.controls['Referencia'].touched}"> 
+            FormPedidoCa.controls['Referencia'].errors &&
+            FormPedidoCa.controls['Referencia'].touched}"> 
           </textarea>
           <small class="text-danger" *ngIf="FormPedidoCa.controls['Referencia'].hasError('maxlength') &&
-          FormPedidoCa.controls['Referencia'].touched">Max. 240 caracteres</small>
+            FormPedidoCa.controls['Referencia'].touched">Max. 240 caracteres</small>
         </div>
       </div>
       <br>
+      <!--CAMPOS DE DATOS DE PAGO Y RECEPCION-->
       <h4><b>Datos de pago y recepción</b></h4>
       <div class="row justify-content-center">
         <div class="col-2">
-          <em> Metodo de pago <span class="text-danger">*</span></em>
+          <em>Metodo de pago<span class="text-danger"> *</span></em>
+          <!--ComboBox para seleccionar forma de pago-->
           <select class="form-select" formControlName="FormaPago">
             <option *ngFor="let opt of Opciones" [ngValue]="opt.Nombre">
               ‌ {{ opt.Nombre }}
@@ -94,12 +99,14 @@
         </div>
         <div class="col-2">
           <em>Monto a pagar</em>
+          <!--Label donde se muestra el monto en base a la suma de los precios del pedido-->
           <label for="lmonto" name="Nombre" class="form-control text-disabled" formControlName="MontoAPagar" readonly>
             ${{calcularMonto()}}
           </label>
         </div>
         <div class="col-2">
-          <em>Opcion</em>
+          <em>Opcion<span class="text-danger"> *</span></em>
+          <!--ComboBox para la selección de opción de recepción-->
           <select class="form-select" formControlName="OpcionRecepcion">
             <option *ngFor="let opt of OpcionesRecepcion" [ngValue]="opt.Nombre">
               ‌ {{ opt.Nombre }}
@@ -108,183 +115,151 @@
         </div>
       </div>
     </form>
-
+    <!--CAMPOS PARA METODO EFECTIVO-->
     <form [formGroup]="FormPedidoCaEfectivo">
       <div class="row justify-content-center">
         <div class="col-2" *ngIf="FormPedidoCa.controls['FormaPago'].value == 'Efectivo'">
-          <em>Monto</em>
+          <em>Monto<span class="text-danger"> *</span></em>
+          <!--Campo monto y su formato de validacion-->
           <input type="text" name="Nombre" class="form-control" formControlName="Monto" [ngClass]="{
-          'is-invalid':
+            'is-invalid':
             (FormPedidoCaEfectivo.controls['Monto'].errors &&
-            FormPedidoCaEfectivo.controls['Monto'].touched) || (FormPedidoCaEfectivo.controls['Monto'].touched && validarMonto())
-        }" />
+            FormPedidoCaEfectivo.controls['Monto'].touched) || (FormPedidoCaEfectivo.controls['Monto'].touched 
+            && validarMonto())}" />
           <small class="text-danger" *ngIf="FormPedidoCaEfectivo.controls['Monto'].hasError('required') &&
-          FormPedidoCaEfectivo.controls['Monto'].touched">Dato requerido.</small>
+            FormPedidoCaEfectivo.controls['Monto'].touched">Dato requerido.</small>
           <small class="text-danger" *ngIf="FormPedidoCaEfectivo.controls['Monto'].hasError('pattern') &&
-          FormPedidoCaEfectivo.controls['Monto'].touched ">Monto invalido</small>
+            FormPedidoCaEfectivo.controls['Monto'].touched ">Monto invalido</small>
           <small class="text-danger" *ngIf="!(FormPedidoCaEfectivo.controls['Monto'].hasError('pattern')) && 
-          !(FormPedidoCaEfectivo.controls['Monto'].hasError('required'))
-          && (FormPedidoCaEfectivo.controls['Monto'].touched && validarMonto())">Monto insuficiente</small>
+            !(FormPedidoCaEfectivo.controls['Monto'].hasError('required'))
+            && (FormPedidoCaEfectivo.controls['Monto'].touched && validarMonto())">Monto insuficiente</small>
         </div>
       </div>
     </form>
 
-
+    <!--CAMPOS PARA METODO TARJETA-->
     <form [formGroup]="FormPedidoCaTarjeta">
       <div class="row justify-content-center">
         <div class="col-2" *ngIf="FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'">
-          <em>Nombre del titular <span class="text-danger">*</span></em>
+          <em>Nombre del titular<span class="text-danger"> *</span></em>
+          <!--Campo Nombre del titular y su formato de validacion-->
           <input type="text" name="Nombre" class="form-control" formControlName="NombreTitular" [ngClass]="{
-          'is-invalid':
+            'is-invalid':
             FormPedidoCaTarjeta.controls['NombreTitular'].errors &&
             FormPedidoCaTarjeta.controls['NombreTitular'].touched}" />
           <small class="text-danger" *ngIf="FormPedidoCaTarjeta.controls['NombreTitular'].hasError('required') &&
-          FormPedidoCaTarjeta.controls['NombreTitular'].touched">Dato requerido.</small>
+            FormPedidoCaTarjeta.controls['NombreTitular'].touched">Dato requerido.</small>
           <small class="text-danger" *ngIf="FormPedidoCaTarjeta.controls['NombreTitular'].hasError('maxlength') &&
-          FormPedidoCaTarjeta.controls['NombreTitular'].touched">Máximo 50 caracteres.</small>
+            FormPedidoCaTarjeta.controls['NombreTitular'].touched">Máximo 50 caracteres.</small>
 
         </div>
-        <div class="col-2" *ngIf="
-              FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
-            ">
-          <em>Apellido del titular <span class="text-danger">*</span></em>
+        <div class="col-2" *ngIf="FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'">
+          <em>Apellido del titular<span class="text-danger"> *</span></em>
+          <!--Campo Apellido del titular y su formato de validacion-->
           <input type="text" name="Nombre" class="form-control" formControlName="ApellidoTitular" [ngClass]="{
-          'is-invalid':
+            'is-invalid':
             FormPedidoCaTarjeta.controls['ApellidoTitular'].errors &&
-            FormPedidoCaTarjeta.controls['ApellidoTitular'].touched
-        }" />
+            FormPedidoCaTarjeta.controls['ApellidoTitular'].touched}" />
           <small class="text-danger" *ngIf="FormPedidoCaTarjeta.controls['ApellidoTitular'].hasError('required') &&
-        FormPedidoCaTarjeta.controls['ApellidoTitular'].touched">Dato requerido.</small>
+            FormPedidoCaTarjeta.controls['ApellidoTitular'].touched">Dato requerido.</small>
           <small class="text-danger" *ngIf="FormPedidoCaTarjeta.controls['ApellidoTitular'].hasError('maxlength') &&
-        FormPedidoCaTarjeta.controls['ApellidoTitular'].touched">Máximo 50 caracteres.</small>
+            FormPedidoCaTarjeta.controls['ApellidoTitular'].touched">Máximo 50 caracteres.</small>
         </div>
-        <div class="col-2" *ngIf="
-              FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
-            ">
-          <em>Numero de tarjeta <span class="text-danger">*</span></em>
-          <input type="text" name="Nombre" class="form-control" formControlName="NroTarjeta" [ngClass]="{
-          'is-invalid':
-            FormPedidoCaTarjeta.controls['NroTarjeta'].errors &&
-            FormPedidoCaTarjeta.controls['NroTarjeta'].touched
-        }" />
-          <small class="text-danger" *ngIf="FormPedidoCaTarjeta.controls['NroTarjeta'].hasError('required') &&
-        FormPedidoCaTarjeta.controls['NroTarjeta'].touched">Dato requerido.</small>
-          <small class="text-danger" *ngIf="FormPedidoCaTarjeta.controls['NroTarjeta'].hasError('pattern') &&
-        FormPedidoCaTarjeta.controls['NroTarjeta'].touched">Ingrese 16 numeros</small>
+
+        <div class="col-2" *ngIf="FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'">
+          <em>Tarjeta<span class="text-danger"> *</span></em>
+          <!--ComboBox para la selección de opción de recepción-->
+          <select class="form-select" formControlName="Tarjeta">
+            <option *ngFor="let tarjeta of Tarjetas" [ngValue]="tarjeta.Nombre">
+              ‌ {{ tarjeta.Nombre }}
+            </option>
+          </select>
         </div>
+        
       </div>
 
       <div class="row justify-content-center">
-
-        <div class="col-2 " *ngIf="
-              FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
-            ">
-          <em>Fecha de vencimiento <span class="text-danger">*</span></em>
-          <input type="text" name="Nombre" placeholder="MM/YYYY" class="form-control" formControlName="FechaVencimiento"
-            [ngClass]="{
-          'is-invalid':
-            FormPedidoCaTarjeta.controls['FechaVencimiento'].errors &&
-            FormPedidoCaTarjeta.controls['FechaVencimiento'].touched
-        }" />
-          <small class="text-danger" *ngIf="FormPedidoCaTarjeta.controls['FechaVencimiento'].hasError('required') &&
-        FormPedidoCaTarjeta.controls['FechaVencimiento'].touched">Dato requerido.</small>
-          <small class="text-danger" *ngIf="FormPedidoCaTarjeta.controls['FechaVencimiento'].hasError('pattern') &&
-        FormPedidoCaTarjeta.controls['FechaVencimiento'].touched">Formato MM/YYYY</small>
+        <div class="col-2" *ngIf="FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'">
+          <em>Numero de tarjeta<span class="text-danger"> *</span></em>
+          <!--Campo Numero de tarjeta y su formato de validacion-->
+          <input type="text" name="Nombre" class="form-control" formControlName="NroTarjeta" [ngClass]="{
+            'is-invalid':
+            FormPedidoCaTarjeta.controls['NroTarjeta'].errors &&
+            FormPedidoCaTarjeta.controls['NroTarjeta'].touched}" />
+          <small class="text-danger" *ngIf="FormPedidoCaTarjeta.controls['NroTarjeta'].hasError('required') &&
+            FormPedidoCaTarjeta.controls['NroTarjeta'].touched">Dato requerido.</small>
+          <small class="text-danger" *ngIf="FormPedidoCaTarjeta.controls['NroTarjeta'].hasError('pattern') &&
+            FormPedidoCaTarjeta.controls['NroTarjeta'].touched">Ingrese 16 numeros</small>
         </div>
-        <div class="col-1" *ngIf="
-              FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
-            ">
-          <em>CVC</em>
+        <div class="col-2 " *ngIf="FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'">
+          <em>Fecha de vencimiento<span class="text-danger"> *</span></em>
+          <!--Campo Fecha de vencimiento y su formato de validacion-->
+          <input type="text" name="Nombre" placeholder="MM/YYYY" class="form-control" formControlName="FechaVencimiento"
+            [ngClass]="{'is-invalid':
+            FormPedidoCaTarjeta.controls['FechaVencimiento'].errors &&
+            FormPedidoCaTarjeta.controls['FechaVencimiento'].touched}" />
+          <small class="text-danger" *ngIf="FormPedidoCaTarjeta.controls['FechaVencimiento'].hasError('required') &&
+            FormPedidoCaTarjeta.controls['FechaVencimiento'].touched">Dato requerido.</small>
+          <small class="text-danger" *ngIf="FormPedidoCaTarjeta.controls['FechaVencimiento'].hasError('pattern') &&
+            FormPedidoCaTarjeta.controls['FechaVencimiento'].touched">Formato MM/YYYY</small>
+        </div>
+        <div class="col-1" *ngIf="FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'">
+          <em>CVC<span class="text-danger"> *</span></em> 
+          <!--Campo CVC y su formato de validacion-->
           <input type="text" name="Nombre" class="form-control" formControlName="Cvc" [ngClass]="{
-          'is-invalid':
+            'is-invalid':
             FormPedidoCaTarjeta.controls['Cvc'].errors &&
-            FormPedidoCaTarjeta.controls['Cvc'].touched
-        }" />
+            FormPedidoCaTarjeta.controls['Cvc'].touched}" />
           <small class="text-danger" *ngIf="FormPedidoCaTarjeta.controls['Cvc'].hasError('required') &&
-        FormPedidoCaTarjeta.controls['Cvc'].touched">Dato requerido.</small>
+            FormPedidoCaTarjeta.controls['Cvc'].touched">Dato requerido.</small>
           <small class="text-danger" *ngIf="FormPedidoCaTarjeta.controls['Cvc'].hasError('pattern') &&
-        FormPedidoCaTarjeta.controls['Cvc'].touched">CVC invalido</small>
+            FormPedidoCaTarjeta.controls['Cvc'].touched">CVC invalido</small>
         </div>
       </div>
     </form>
 
+    <!--CAMPOS OPCION RECEPCION ELEGIR FECHA Y HORA-->
     <form [formGroup]="FormPedidoCaRecepcion">
       <div class="row justify-content-center">
-        <div class="col-2 " *ngIf="
-            FormPedidoCa.controls['OpcionRecepcion'].value == 'Elegir fecha y hora'
-          ">
+        <div class="col-2 " *ngIf="FormPedidoCa.controls['OpcionRecepcion'].value == 'Elegir fecha y hora'">
           <em>Fecha de recepción<span class="text-danger">*</span></em>
+          <!--Campo fecha y su formato de validación-->
           <input type="text" name="Nombre" placeholder="DD/MM" class="form-control" formControlName="FechaRecepcion"
-            [ngClass]="{
-        'is-invalid':
-          FormPedidoCaRecepcion.controls['FechaRecepcion'].errors &&
-          FormPedidoCaRecepcion.controls['FechaRecepcion'].touched
-      }" />
+            [ngClass]="{'is-invalid':
+            FormPedidoCaRecepcion.controls['FechaRecepcion'].errors &&
+            FormPedidoCaRecepcion.controls['FechaRecepcion'].touched}" />
           <small class="text-danger" *ngIf="FormPedidoCaRecepcion.controls['FechaRecepcion'].hasError('required') &&
-      FormPedidoCaRecepcion.controls['FechaRecepcion'].touched">Dato requerido.</small>
+            FormPedidoCaRecepcion.controls['FechaRecepcion'].touched">Dato requerido.</small>
           <small class="text-danger" *ngIf="FormPedidoCaRecepcion.controls['FechaRecepcion'].hasError('pattern') &&
-      FormPedidoCaRecepcion.controls['FechaRecepcion'].touched">Fecha invalida (DD/MM)</small>
+            FormPedidoCaRecepcion.controls['FechaRecepcion'].touched">Fecha invalida (DD/MM)</small>
         </div>
         <div class="col-1 " *ngIf="FormPedidoCa.controls['OpcionRecepcion'].value == 'Elegir fecha y hora'">
           <em>Hora<span class="text-danger">*</span></em>
+          <!--Campo hora y su formato de validación-->
           <input type="time" name="Hora" class="form-control " formControlName="Hora" [ngClass]="{
-          'is-invalid':
+            'is-invalid':
             FormPedidoCaRecepcion.controls['Hora'].errors &&
-            FormPedidoCaRecepcion.controls['Hora'].touched
-        }" />
+            FormPedidoCaRecepcion.controls['Hora'].touched}" />
           <small class="text-danger" *ngIf="FormPedidoCaRecepcion.controls['Hora'].hasError('required') &&
-      FormPedidoCaRecepcion.controls['Hora'].touched">Dato requerido.</small>
+            FormPedidoCaRecepcion.controls['Hora'].touched">Dato requerido.</small>
         </div>
       </div>
     </form>
-
-    <!-- <div class="row justify-content-center">
-      <div class="col-2 " *ngIf="
-              FormPedidoCa.controls['OpcionRecepcion'].value == 'Elegir fecha y hora'
-            ">
-        <em>Fecha de recepción<span class="text-danger">*</span></em>
-        <input type="date" name="Fecha" class="form-control" formControlName="Fecha"/>
-      </div>
-      <div class="col-1 " *ngIf="FormPedidoCa.controls['OpcionRecepcion'].value == 'Elegir fecha y hora'">
-          <em>Hora<span class="text-danger">*</span></em>
-          <input type="time" name="Hora" class="form-control " formControlName="Hora"/>         
-      </div>
-    </div> -->
-
-    <!--
-    <h4><b>Opciones de recepción</b></h4>
+    <br>
     <div class="row justify-content-center">
-      <form [formGroup]="FormPedidoCaRecepcion">
-      <div class="col-3" >
-        <em>Opcion</em>
-        <select class="form-select" formControlName="OpcionRecepcion">
-          <option *ngFor="let opt of OpcionesRecepcion" [ngValue]="opt.Nombre">
-            ‌ {{ opt.Nombre }}
-          </option>
-        </select>
-      </div>
-      <div class="col-2" *ngIf="
-              FormPedidoCa.controls['FormaPago'].value == 'Tarjeta de credito'
-            ">
-        <em>CVC</em>
-        <input type="text" name="Nombre" class="form-control" formControlName="Cvc" />
-      </div>
-      </form>
-    </div>
-    -->
+      <em class="aclaracion">Los campos marcados con<span class="text-danger"> *</span> son obligatorios</em></div>
   </div>
-
-
   <br>
+  <!--Div que contiene botones de realizar y cancelar pedido-->
   <div class="container-fluid">
     <div class="row ">
       <div class="col text-center">
+        <!--Boton realizar pedido-->
         <button class="btn btn btn-light rounded botones" [disabled]="obtenerEstadoValidacion()" (click)="grabar()">
           Realizar pedido</button>
+          <!--Boton cancelar pedido-->
         <button class="btn btn btn-light rounded botones" (click)="cancelar()"> Cancelar pedido</button>
       </div>
-
     </div>
-
   </div>
 </div>
